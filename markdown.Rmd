@@ -1,0 +1,263 @@
+---
+title: "ECO2411. Assignment 1"
+author: "Andriy Levitskyy (ID:1003874701), Yukuo Liu(ID:998402232)"
+output: pdf_document
+---
+# Question 1
+**Implied Volatility (IV)** is an estimated value for the volatility of security prices and serves as one of the deciding factor for the pricing of options ("Implied Volatility" - IV, n.d.). For investors, a change in Implied Volatility acts as a signal that the future prices of assets are either about to increase or decrease. An increase in IV usually implies that the market is bearish, or in other words, facing a downwards trend in asset prices due to greater volatility (risk). The reverse is true when IV decreases and this is also known as a bullish market.  
+
+In mathematical finance, Implied Volatility is used as one of the inputs for option pricing models such as Black-Scholes which provides fairly accurate predictions for option prices ("Implied Volatility", n.d.).  
+
+**VIX** is the ticker symbol for the CBOE Volatility Index. It is a forward looking measure of the market's short term (30 day) volatility expectations ("VIX (CBOE Volatility Index)", n.d.), i.e. the implied volatility. The VIX is calculated by taking the square root of the variances of S&P 500 option prices categorized as near-term and next-term, which are options more than 23 days but less than 37 days away from expiration("white paper", n.d.) . These components also have their own separate indexes listed by CBOE as VIN (near-term) and VIF (next-term) (CBOE, n.d.). Prior to 2003, VIX was calculated using S&P 100 option prices but this was found to be less predictive than S&P 500. The old measure of VIX using S&P 100 prices is still shown under the name VXO (MoneyShow.com, n.d.).  
+
+**CBOE** stands for the Chicago Board Options Exchange. Founded in 1973, it is the first and largest options exchange in the US. Its parent company, CBOE Holdings, is also responsible for the introduction of the VIX. Trading on CBOE is done through a hybrid system of electronic devices and open outcry (where traders are physically present on the exchange) ("CBOE Hybrid Trading System", n.d.). 
+
+
+# Question2  
+
+For graphs and code see the appendix.  
+
+##Evolution of VIX  
+
+Between 2004 and 2007, the VIX steadily dipped in value until it reached its lowest point in 2007 which coincided with the beginning of the financial crisis of 2007-2008. Following this event, the VIX trended upwards then downwards in dramatic fashion due to its mean-reverting nature, a rise in value for VIX will usually be accompanied by a decline (Rosenberg, 2017). Post 2009, the VIX saw several other smaller spikes in value, including a notable one in 2010, known as the flash crash.  
+
+##Comparison with the VXO  
+
+The shapes of the VIX and the VXO evolution are nearly identical. The only notable difference is that the spike following the financial crisis seemed to have peaked higher in the VXO compared to the VIX.
+
+
+# Question3
+The estimated moments of VIX:  
+Mean=18.77377  
+Variance=81.88319  
+Skewness=2.616998  
+Kurtosis=12.0675  
+The estimated moments of VXO:  
+Mean=18.55466  
+Variance=93.00985  
+Skewness=2.724908  
+Kurtosis=13.18101  
+
+The historical distribtuion of VXO and VIX can not be normal because range of normal extends to negative values, but VXO and VIX can only be positive. Log-normality is a better description for these indexes, but also not good enough becuase of the right-skew of the empirical distriutions and values of curtosis exceeding 3 (leptokurtic), as shown on the QQ-plots.  
+
+# Question 4   
+
+The **rolling mean** graphs smooth out both the original VIX and VXO evolutions revealing long term trends in the volatility of the market. Based on these graphs, it is evident that the values of the VIX and VXO saw major shift upwards in 2009 all the way until 2010 when both of them plummeted in terms of volatility. The market seems to have settled at around an index of 15 since then and hovers either slightly above or below that value.  
+
+The **rolling value at risk (VaR)** at 25% measures the change in the risk of losing 25% of the option price over time. From the VIX and VXO graphs, it is evident that the risk rises and falls in conjunction with the mean of the volatility. The rolling VaR at 75% also fits this pattern, although there is a much greater rise in risk during the financial crisis as well as in later times where it appears that the risk is slightly higher at 75% VaR compared to 25%.  
+
+The **rolling variance** measures the long-term changes in the variance of the VIX. This variance can also be interpreted as the volatility of the VIX, better known as the VVIX. This index is useful as there is currently an active market for options on the VIX first introduced in 2006 (CBOE, n.d.). The rolling variance graphs shows trends that are uncorrelated with the trends of the VIX, except for the notable peaks such as the financial crisis and the flash crash (Moran, 2012) In addition to this difference, the range of values for the VVIX is much greater than the VIX. 
+
+The **market for volatility of volatility** exists because volatility is volatile. One of the reasons of its existance is speculative motive. One can also hedge against recessions, as during the recessions the volatility of VIX increases drmatically. This market is the market for VVIX options outlined before.
+
+# Question 5  
+
+The old methodology for calculating the expected variance of the market was based on the option prices of the S&P 100 (CBOE, n.d.). This method was phased out in 2003 and replaced by the new VIX which calculates the expected market volatility based on S&P 500 prices. This is advantageous because at the time of the change, volatility was made into an asset class. This meant that more precise predictions needed to be made and the old method could not meet this demand. The old method for calculating future volatility was based on S&P 100 prices which were less predictive. The new method for calculating volatility uses S&P 500 prices which have more option prices available, thus providing a much better representation of the entire market (MoneyShow.com, n.d.).  
+
+Despite being phased out, the old method for expected volatility is still computed and displayed alongside the VIX and is known as the CBOE S&P 100 volatility under the ticker symbol VXO (CBOE, n.d.). This is so that traders can still use this for reference and comparison. The VXO index being more volatile gives some information about volatility skew. ("white paper", n.d.) 
+
+# Citations
+Implied Volatility - IV. (n.d.). Retrieved from http://www.investopedia.com/terms/i/iv.asp  
+
+Implied Volatility. (n.d.). Retrieved from https://en.wikipedia.org/wiki/Implied_volatility  
+
+VIX (CBOE Volatility Index). (n.d.) Retrieved from http://www.investopedia.com/terms/v/vix.asp?optly_redirect=integrated&lgl=term-video-bid  
+
+White Paper - The CBOE Volatility Index - VIX. (n.d.) Retrieved from https://www.cboe.com/micro/vix/vixwhite.pdf  
+
+CBOE, (n.d.). VIX Component Volatility Indexes (VIN VIF). Retrieved from http://www.cboe.com/products/vix-index-volatility/volatility-indicators/other-cboe-volatility-indicators/vix-component-volatility-indexes-vin-vif  
+
+MoneyShow.com, (n.d.). Volatility - The Birth Of A New Asset Class. Retrieved from http://www.investopedia.com/articles/optioninvestor/05/vixindex.asp  
+
+CBOE Hybrid Trading System. (n.d.) Retrieved from http://www.marketswiki.com/wiki/Hybrid  
+
+Rosenberg, A. (2017, Mar). The market's 'fear index' hasn't run this cold since before the financial crisis. Retrieved from https://www.cnbc.com/2017/03/10/the-markets-fear-index-hasnt-run-this-cold-since-before-the-financial-crisis.html  
+
+CBOE, (n.d.). VIX Options. Retrieved from http://www.cboe.com/products/vix-index-volatility/vix-options-and-futures/vix-options  
+
+Moran, M. (2012, Mar). New VVIX Index Measures the Volatility of Volatility. Retrieved from http://www.spvixviews.com/2012/03/16/new-vvix-index-measures-the-volatility-of-volatility/  
+
+CBOE, (n.d.). CBOE S&P 100 Volatility Index- VXO. Retrieved from http://www.cboe.com/products/vix-index-volatility/volatility-on-stock-indexes/cboe-s-p-100-volatility-index-vxo
+
+#Appendix
+##Question 2
+Downloading the data:
+```{r}
+vix<-read.csv("/Users/andriylevitskyy/Desktop/MA/Fin Metr/vixcurrent.csv")
+vxo<-read.csv("/Users/andriylevitskyy/Desktop/MA/Fin Metr/vxocurrent.csv")
+```
+
+Plotting the evolution of VIX:
+```{r}
+vxo$Date <- as.Date( vxo$Date, '%m/%d/%Y')
+vix$Date <- as.Date( vix$Date, '%m/%d/%Y')
+#par separates plotting window into 2 plots.
+par(mfrow=c(1,2))
+plot(vix$VIX.Open~vix$Date,type="l",ylim=c(0,90),ylab="VIX",xlab="Date")
+plot(vxo$Open~vxo$Date,type="l",ylim=c(0,90),ylab="VXO",xlab="Date")
+```
+  
+##Question 3  
+
+  Plotting the historical distribution of VIX:
+```{r}
+library(moments)
+#plotting the histogram
+hist(vix$VIX.Open,xlim=c(9,60),breaks=50,
+     ylab="frequency",xlab="VIX",main="VIX distriubtion")
+```  
+The moment are as follows:
+```{r}
+mean(vix$VIX.Open)
+var(vix$VIX.Open)
+skewness(vix$VIX.Open)
+kurtosis(vix$VIX.Open)
+```
+Plotting the 2 QQ-plots against normal distribution on normal scale and lognormal distribution on the log scal obtain:
+```{r}
+par(mfrow=c(1,2))
+#Calculating theoretical percentiles for QQ-plot
+y <- qnorm(ppoints(length(vix$VIX.Open)),mean=mean(vix$VIX.Open),sd=var(vix$VIX.Open)^(1/2))
+#Plotting
+qqplot(y,vix$VIX.Open,ylim=c(-10,80),xlim=c(-10,80),
+       ylab="Empirical values of quantiles",
+       xlab="Theoretical values of quantiles",main="Normal QQ-plot")
+abline(0, 1) 
+y<-qnorm(ppoints(length(vix$VIX.Open)),
+         mean=mean(log(vix$VIX.Open)),sd=var(log(vix$VIX.Open))^(1/2))
+qqplot(y,log(vix$VIX.Open),ylim=c(1,5),xlim=c(1,5),
+       ylab="Empirical values of quantiles",
+       xlab="Theoretical values of quantiles",main="LogNormal QQ-plot")
+abline(0, 1) 
+```
+  
+Normal can theoretically take negative values, but VIX can not.  
+Repeating the exercise for the VXO:
+```{r}
+vxo<-vxo[-c(611),]
+#Removing a wierd NA row
+hist(vxo$Open,xlim=c(9,60),breaks=50,
+     ylab="frequency",xlab="VIX",main="VXO distribution")
+mean(vxo$Open)
+var(vxo$Open)
+skewness(vxo$Open)
+kurtosis(vxo$Open)
+par(mfrow=c(1,2))
+y <- qnorm(ppoints(length(vxo$Open)),mean=mean(vxo$Open),sd=var(vxo$Open,na.rm=TRUE)^(1/2))
+qqplot(y,vxo$Open,ylim=c(-10,80),xlim=c(-10,80),
+       ylab="Empirical values of quantiles",
+       xlab="Theoretical values of quantiles",main="Normal QQ-plot")
+abline(0, 1) 
+y<-qnorm(ppoints(length(vxo$Open)),mean=mean(log(vxo$Open)),sd=var(log(vxo$Open))^(1/2))
+qqplot(y,log(vxo$Open),ylim=c(1,5),xlim=c(1,5),
+       ylab="Empirical values of quantiles",
+       xlab="Theoretical values of quantiles",main="LogNormal QQ-plot")
+abline(0, 1) 
+```  
+  
+## Question 4  
+  
+Calculating rolling statistics for VIX:
+```{r}
+library(lubridate)
+#setting the initial dates
+initial_date1<-vix$Date[1]-1
+initial_date2<-vix$Date[484]
+#Next 2 lines are used to determine the last day of the month,
+#by going to the 1st day of the next month
+#and substracting one day from it
+month(initial_date2) <- month(initial_date2) + 1
+initial_date3<-initial_date2-1
+#setting the dataframe of rolling values
+compData <- data.frame(rolling_mean= numeric(0), 
+                       rolling_var= numeric(0),
+                       rolling_VaR25= numeric(0),
+                       rolling_VaR75= numeric(0))
+#the loop calculating the values
+while(initial_date3<=vix$Date[length(vix$Date)]){
+  #taking 2 year subest of VIX and VXO 
+  data<-subset(vix,(Date<= initial_date3)&(Date>= initial_date1))
+  colnames(data)<-c("Date","Open","High","Low","Close")
+  #calculating values
+  rol_mean<-mean(data$Open)
+  rol_var<-var(data$Open)
+  var25<-quantile(data$Open,probs=c(0.25,0.75))[1]
+  var75<-quantile(data$Open,probs=c(0.25,0.75))[2]
+  #appending values to next row of my dataframe
+  compData[nrow(compData)+1, ] <-c(rol_mean,rol_var,var25,var75)
+  #update dates by month
+  month(initial_date1)<-month(initial_date1)+1
+  month(initial_date2) <- month(initial_date2) + 1
+  initial_date3<-initial_date2-1
+}
+#Doing the same thing but to calculate date 
+#(need to do that separately because of specifics of R)
+i<-1
+initial_date1<-vix$Date[1]-1
+initial_date2<-vix$Date[484]
+month(initial_date2) <- month(initial_date2) + 1
+initial_date3<-initial_date2-1
+while(initial_date3<=vix$Date[length(vix$Date)]){
+  compData$Date[i]<-as.character(initial_date3)
+  month(initial_date2) <- month(initial_date2) + 1
+  initial_date3<-initial_date2-1
+  i<-i+1
+}
+compData$Date<-as.Date(compData$Date,"%Y-%m-%d")
+#plotting
+par(mfrow=c(2,2))
+plot(compData$rolling_mean~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling mean")
+plot(compData$rolling_var~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling variance")
+plot(compData$rolling_VaR25~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling VaR 25%")
+plot(compData$rolling_VaR75~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling VaR 75%")
+```  
+  
+Calculating rolling statistics for VXO:
+```{r}
+library(lubridate)
+initial_date1<-vxo$Date[1]-1
+initial_date2<-vxo$Date[484]
+month(initial_date2) <- month(initial_date2) + 1
+initial_date3<-initial_date2-1
+compData <- data.frame(rolling_mean= numeric(0), 
+                       rolling_var= numeric(0),
+                       rolling_VaR25= numeric(0),
+                       rolling_VaR75= numeric(0))
+while(initial_date3<=vxo$Date[length(vxo$Date)]){
+  data<-subset(vxo,(Date<= initial_date3)&(Date>= initial_date1))
+  colnames(data)<-c("Date","Open","High","Low","Close")
+  rol_mean<-mean(data$Open)
+  rol_var<-var(data$Open)
+  var25<-quantile(data$Open,probs=c(0.25,0.75))[1]
+  var75<-quantile(data$Open,probs=c(0.25,0.75))[2]
+  compData[nrow(compData)+1, ] <-c(rol_mean,rol_var,var25,var75)
+  month(initial_date1)<-month(initial_date1)+1
+  month(initial_date2) <- month(initial_date2) + 1
+  initial_date3<-initial_date2-1
+}
+i<-1
+initial_date1<-vxo$Date[1]-1
+initial_date2<-vxo$Date[484]
+month(initial_date2) <- month(initial_date2) + 1
+initial_date3<-initial_date2-1
+while(initial_date3<=vxo$Date[length(vxo$Date)]){
+  compData$Date[i]<-as.character(initial_date3)
+  month(initial_date2) <- month(initial_date2) + 1
+  initial_date3<-initial_date2-1
+  i<-i+1
+}
+compData$Date<-as.Date(compData$Date,"%Y-%m-%d")
+par(mfrow=c(2,2))
+plot(compData$rolling_mean~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling mean")
+plot(compData$rolling_var~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling variance")
+plot(compData$rolling_VaR25~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling VaR 25%")
+plot(compData$rolling_VaR75~compData$Date,type="l",ylab="index",
+     xlab="Date",main="Rolling VaR 75%")
+```  

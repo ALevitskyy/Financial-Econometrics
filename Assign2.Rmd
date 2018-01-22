@@ -1,0 +1,120 @@
+---
+title: "ECO2411. Assignment 2"
+author: "Andriy Levitskyy (ID:1003874701), Yukuo Liu(ID:998402232)"
+output: pdf_document
+---
+
+#Part 1   
+Houthakker(1961) in his paper questions the martingale properties of wheat and corn future prices. He argues that by definition randomness can only be defined negatively - as absence of any patterns. He proposes a test based on stop-loss strategy to check if martingale property holds. According to Doob`s stopping time theorem if price follows a martingale there is no profitable strategy based on past prices or returns.  
+Houthakker checks if setting a stop-loss order, which closes the position when the market price crosses some value which is a percantage of buy price, is profitable. His findings are affirmative.  
+Intuitively, the strategy works if price can only make relatively small moves (noise) or big persistant swings. After the price change crosses some threshold we know that probability of movement in direction  of momentum should be higher than probability of contrarian price movements. This is inconsistent with martingale hypothesis. Houthakker(1961) things that this puzzle can be attributed to "normal backwardation" and seasonality.
+In mathematical terms, martingale property is $E[P_{t}|\Omega_{t-1}]=P_{t-1}$ or $E[\Delta P_{t}|\Omega_{t-1}]=0$
+
+The result of Houthaker suggest, that following a movement which is larger in magnitude than noise, the prices are more likely to follow the momentum, so $$E[\Delta P_{t}|\Delta P_{t-1}>X]>0$$ violating the martingale condition.
+
+Despite Houthakers claims, Samuelson(1965) looks at few possible theoretical scenarios and proves given a set of quite restrictive assumption that future price follows a martingale: $E[Y(T,t)-Y(T,t-1)|\Omega_{t-1}]=0$, even if spot prices follow a trend. He consider a very general Markov Process process and an AR(1): $X_{t+1}=aX_t+u$ processes for spot prices. He assumes no comissions and risk neutrality, such that $$Y(0,t+T)=X_{t+T}$$ holds with perfect information and 
+$$Y(T,t+T)=E[X_{t+T}|X_t,X_{t-1},...]$$ when facing uncertainty. The two drawbacks of Samuelsons approach is that the derivation depends on agents being risk-neutral and that $E[X_{t+T}|X_t,X_{t-1},...]$, the expected rate of return, is exogenous. Samuelson makes explicit that given the assumptions, normal backwardation does not explain the profitability of Hauthakker`s stop-loss strategy.
+
+Leroy(1973) extends on Samuelson’s results by considering a dynamic model of asset pricing where the distribution of stock prices is considered on an intertemporal scale (rather than the one-period time frame of Samuelson’s model).  He also relaxes the assumption of risk-neutrality and exogenously given expected rate of return as in Samuelson‘s model, and looks to see if martingale properties should theoretically hold.
+
+Several assumptions are made in order to satisfy the dynamic setting:
+
+1) There are two types of assets; a risk-free security asset that earns a constant exogenously determined rate of return, and a homogenous stock which earns random returns that conform to a distribution which is stationary in time.
+
+2) There are a finite number of investors that all share the same risk preferences (risk-averse) and have a utility function represented by the mean and variance of their expected next period’s wealth. They are also assumed to exhibit constant absolution risk aversion, i.e. not a function of next period’s expected wealth.
+
+3) The investor makes an unbiased forecast for the price of equity in the next period and spends his wealth on a portfolio consisting of stock and risk free asset.
+
+4) The probability distribution of stock earnings follows an autoregressive process of order 1. Under this assumption, present stock prices are a linear function of past prices, making past prices irrelevant in determining future prices.
+
+Based on these assumptions, Leroy`s modified dynamic CAPM shows that for a risk-averse investor in a dynamic setting, the expected excess returns and risk (variance on the expected excess returns) are both greater than zero and constant over time.
+
+This finding is significant in proving that the rates of returns on stock do not follow a martingale. From this identity given by (Leroy, 1973): $r^e_t=r^*+e_t/p_t$, where $r^e_t$ is the expected rate of return of stock at time t and r* is a constant exogenously determined rate of return. It can be seen that since $e_t$ (the expected excess return) is constant and greater than zero (due to the assumption that investors are risk-averse) and p_t is a function of past stock prices, the expected rate of return on stock depend on past prices. This thus violates the martingale condition, referenced before.
+
+However, Leroy also argues that if the restricitve assumptions in his paper: constant absolute risk aversion and stock earnings following autoregressive process of order 1 are to be relaxed, then the rates of return may behave approximately like martingale.
+
+
+  
+# Part 2  
+### 1)
+
+ACF and estimates of the autoregressive model can be found in the appendix. The autoregressive order was selected to be 11 using Box-Jenkins methodlogy and Akaike Infromation Criterion. The order suggests that the past VIX values going as far back as 2 weeks ago may be infromative about tomorrows VIX.  
+I used the Augmented Dickey-Fuller statistic to test if VIX is stationarity and the results are reported in the appendix. Dickey-Fuller fails to reject the null hypothesis of non-stationarity at 5% significance level, so according to the test seires are not stationary. These results however should be treated sceptically, as the power of the ADF test is weak for alternatives where series are stationary but very persistant.
+
+### 2)
+According to ADF test reported in the Appendix, both series behave as stationary, implying that VIX is an integrated process of order 1. Another alternative is that  the series are overdifferenced, however the pattern of ACF is not supportive of this possibility (first autocorelation is not equal to -0.5).  
+The autoregressive orders were chosen in the same way as in part 1 and the chosen orders were 10 for the first difference and 35 for the medium term changes. This choice suggests that the medium term changes may be affected by some longer-term trends relative to short-term changes. Looking at ACFs medium term changes are much more persistant then short term changes.
+  
+### 3)  
+The regression output is reported in Appendix. The results suggest that medium-term changes in VIX Granger cause short-term changes in VIX. It also suggests that short-term chagnes in VIX are reverting to mean 0 according to the value of intercept and negative sign of the AR(1) coefficient.   
+The medium term changes, however, are persistant and carry with momentum, as the positve sign of coefficient on $\Delta_{5}log(VIX)$ suggests. The significance of the $\Delta_{5}log(VIX)^2$ term implies that the effect of medium term shock decreases with magnitude of the shock.
+I can not apply the efficient market hypothesis to VIX as it is not traded. The predictive model may be useful in VIX option markets, but it is likely that it may not lead to any profitable trading strategies as the information should be priced out.
+Predictability of VIX however implies that volatility of the stock market (S&P index in particular) can be predicted. If one can see positive medium-term change in VIX, one can expect future volatility to increase. As a result, a risk-averse protfolio manager would want to pull out off the stock market (or decrease exposure) when the described scenario happens.
+
+# Citations:
+
+Houthakker, H.S. (1961). Systematic and Random Elements in Short-Term Price Movements. The American Economic Review. 51(2), pp 164-172.
+
+Samuelson, P.A. (1965). Proof That Properly Anticipated Prices Fluctuate Randomly. Industrial Management Review, 6(2), pp 41-49.
+
+Leroy, F.S. (1973). Risk Aversion and the Martingale Property of Stock Prices. International Economic Review. 14(2), pp 436-446.
+
+# Appendix  
+
+## Part 2  
+
+### a)
+#### Loading packages and data:  
+
+```{r}
+library(tseries)
+library(dynlm)
+setwd("/Users/andriylevitskyy/Desktop/MA/Fin Metr/assignement2")
+vix<-read.csv("vixcurrent.csv")
+vix$Date <- as.Date( vix$Date, '%m/%d/%Y')
+logVIX<-log(vix$VIX.Open)
+``` 
+  
+#### Autocorrelation function:
+```{r}
+acf(logVIX)
+``` 
+  
+####  Output of AR(n) model
+```{r}
+ar(logVIX)
+```   
+#### Augmented Dickey-Fuller test for stationaraity
+```{r}
+adf.test(logVIX)
+``` 
+### b)
+#### Manipulating data for future use:
+```{r}
+difflogVIX<-diff(logVIX)
+difflogVIX<-as.ts(difflogVIX)
+difflogVIX5<-diff(logVIX,lag=5,differences=1)
+difflogVIX5<-as.ts(difflogVIX5)
+difflogVIXsqu<-difflogVIX^2
+difflogVIX5squ<-difflogVIX5^2
+``` 
+#### Replicating results for the first difference
+```{r}
+acf(difflogVIX)
+ar(difflogVIX)
+adf.test(difflogVIX)
+```
+#### Replicating results for the fifth difference
+```{r}
+acf(difflogVIX5)
+ar(difflogVIX5)
+adf.test(difflogVIX5)
+```
+
+### c)
+#### Running the regression model: 
+```{r}
+model<-dynlm(difflogVIX~L(difflogVIX,1)+L(difflogVIX5,1)+
+            L(difflogVIXsqu,1)+L(difflogVIX5squ,1)^2)
+summary(model)
+``` 

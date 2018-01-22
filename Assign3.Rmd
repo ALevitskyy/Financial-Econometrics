@@ -1,0 +1,102 @@
+---
+title: "ECO2411. Assignment 3"
+author: "Andriy Levitskyy (ID:1003874701), Yukuo Liu(ID:998402232)"
+output: pdf_document
+---
+The answer to Exercise 1 is after the answer to Exercise 2
+
+# Exercise 2
+
+### 2.2
+
+The ACF of VIX suggest absence of any autocorrelation dynamics for the series. ACF for S&P looks similar to an AR(1) process with small autocorrelation coefficient. Cross-ACF suggest possibility of some Granger-Causality between variables, as the cross-autocorrelations are significant at lags 1,2 and 3.
+
+### 2.4
+
+The most persistant combination is given by the eigenvector on the largest in magnitude eigenvalue of AR(1) coefficient matrix: [1 S&P,0.00063 VIX]
+The least risky portfolio can be found by renormalizing the eigenvector on the smalles eigenvalue of the covariance matrix [-1 S&P,0.00013 VIX] in such a way that the sum of entries are equal to 1 (for example by dividing by the sum of the entries). The portfolio shares I got are:
+[1.0001300169, -0.0001300169], implying that one needs to short VIX to decrease variance. As the eigenvalue is very close to zero, this may imply that this portfolio is almost riskless.
+
+### 2.6
+
+As squared return on S&P is a good indicator of the volatility of stock market prices, I may decide to increase my exposure to the stock market, as the VAR forecast predicts decrease in risk. Given the results of the spectral decomposition I would also buy some VIX options, so I can be compensated if the stock market volatility increases.
+\pagebreak
+
+# References
+
+Kilian (2013). Structural Vector Autoregressions. Handbook of Research Methods and Applications in Empirical Macroeconomics, Chapter 22, 515-554, Edward Elgar.
+
+# Appendix
+
+#### Making the dataset
+
+```{r results='hide', message=FALSE, warning=FALSE}
+library(lubridate)
+library(zoo)
+library(ggplot2)
+library(vars)
+setwd("/Users/andriylevitskyy/Desktop/MA/Fin Metr/assignment3")
+vix<-read.csv("vixcurrent.csv")
+vix<-vix[,c(1,2)]
+vix$Date<-mdy(vix$Date)
+colnames(vix)<-c("date","vix")
+sp500<-read.csv("SP500.csv")
+sp500$DATE<-ymd(sp500$DATE)
+colnames(sp500)<-c("date","sp")
+final_dataset<-merge(vix,sp500,by="date")
+final_dataset$sp<-as.numeric(as.character(final_dataset$sp))
+final_dataset<-read.zoo(final_dataset)
+sp2<-diff(log(final_dataset$sp))^2
+vix2<-diff(log(final_dataset$vix))
+final_dataset<-cbind(final_dataset,sp2)
+final_dataset<-cbind(final_dataset,vix2)
+final_dataset<- data.frame(index(final_dataset), as.data.frame(final_dataset))
+colnames(final_dataset)[1]<-"date"
+``` 
+
+#### Plotting the series
+
+```{r}
+p1<-ggplot() + 
+  geom_line(data = final_dataset, aes(x = date, y = vix2), color = "red")+
+  xlab('date') +
+  ylab('Return on VIX')
+p2<-ggplot() + 
+  geom_line(data = final_dataset, aes(x = date, y = sp2), color = "blue") +
+  xlab('data') +
+  ylab('Squared return on S&P')
+require(gridExtra)
+grid.arrange(p1,p2, ncol=2)
+plot(ts(final_dataset$vix2/1000),col="red",ylab="Y1t/1000, Y2t")
+lines(ts(final_dataset$sp2),col="black")
+``` 
+
+#### Autocorrelation functions
+```{r}
+par(mfrow=c(1,2))
+acf(final_dataset$sp2,na.action=na.pass,main="ACF S&P")
+acf(final_dataset$vix2,na.action=na.pass,main="ACF VIX")
+
+ccf(final_dataset$sp2,final_dataset$vix2,na.action=na.pass,main="CACF")
+``` 
+
+#### VAR modelling
+```{r}
+final_dataset<-na.omit(final_dataset)
+var_mod<-VAR(final_dataset[,c(4,5)])
+summary(var_mod)
+``` 
+#### Spectral Decompositions
+```{r}
+covar_mat<-matrix(data=c(1.396e-08,7.027e-07,7.027e-07,5.323e-03),nrow=2,ncol=2)
+coef_mat<-matrix(data=c(2.884e-01,2.347e-04,24.482651,-0.066711 ),nrow=2,ncol=2)
+eigen(covar_mat)
+eigen(coef_mat)
+``` 
+#### Predictions
+```{r}
+prediction<-predict(var_mod,n.ahead=50)
+par(mfrow=c(1,2))
+plot(prediction$fcst$sp2[,1],type="l",ylab="S&P prediction")
+plot(prediction$fcst$vix2[,1],type="l",ylab="VIX prediction")
+``` 
